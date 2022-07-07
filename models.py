@@ -48,7 +48,18 @@ class BufferModel(BaseModel):
     )
     database: str = Field(
         default=None, title="Name of the database the table belongs to."
-    ) 
+    )
     distance_in_kilometers: float = Field(
         default=None, title="Size of buffer in kilometers."
-    )   
+    )
+
+class DissolveByValueModel(BaseModel):
+    table: str = Field(
+        default=None, title="Name of the table to perform analysis on."
+    )
+    database: str = Field(
+        default=None, title="Name of the database the table belongs to."
+    )
+    column: str = Field(
+        default=None, title="Column used to dissolve geometry."
+    )

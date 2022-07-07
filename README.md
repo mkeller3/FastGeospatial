@@ -131,17 +131,26 @@ Dissolve any geometric table into one single geometry.
 ```
 
 ## Dissolve By Value
+![Dissolve By Value Image](/images/dissolve_by_value.png "Dissolve By Value Image)
 
 ### Description
+Dissolve any geometric table into geometries based off a column in the table.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data",
+    "column": "sub_region"
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Rectangle Grids

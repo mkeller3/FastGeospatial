@@ -20,7 +20,7 @@ async def buffer(table: str, database: str, distance_in_kilometers: float, new_t
             table=table,
             database=database
         )
-        
+
         fields = ','.join(fields)
 
         async with pool.acquire() as con:
@@ -59,13 +59,44 @@ async def dissolve(table: str, database: str, new_table_id: str, process_id: str
 
     try:
 
-        pool = main.app.state.databases[f'{database}_pool']        
+        pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
             sql__query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Union(geom) as geom
             FROM "{table}";
+            """
+
+            await con.fetch(sql__query)
+
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def dissolve_by_value(table: str, database: str, new_table_id: str, column: str, process_id: str):
+    """
+    Method to dissolve any geometric table into one geometry based off a column.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql__query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT DISTINCT("{column}"), ST_Union(geom) as geom
+            FROM "{table}"
+            GROUP BY "{column}";
             """
 
             await con.fetch(sql__query)
