@@ -74,3 +74,14 @@ class GridModel(BaseModel):
     grid_size_in_kilometers: float = Field(
         default=None, title="Size of grids in kilometers."
     )
+
+class KMeansModel(BaseModel):
+    table: str = Field(
+        default=None, title="Name of the table to perform analysis on."
+    )
+    database: str = Field(
+        default=None, title="Name of the database the table belongs to."
+    )
+    number_of_clusters: int = Field(
+        default=None, title="Number of clusters to group points together."
+    )

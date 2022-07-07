@@ -222,12 +222,18 @@ Generate a bounding box of a table.
 ```
 
 ## K Means Cluster
+![K Means Cluster Image](/images/k_means_cluster.png "K Means Cluster Image")
 
 ### Description
+Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to group points based on their location.
 
 ### Example Input
 ```json
-
+{
+    "table": "zip_centroids",
+    "database": "data",
+    "number_of_clusters": 5
+}
 ```
 
 ### Example Output
