@@ -238,7 +238,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Voronoi
@@ -252,21 +255,32 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Center Of Each Polygon
+![Center of Each Polygon Image](/images/center_of_each_polygon.png "Center of Each Polygon Image")
 
 ### Description
+Find the center of each polygon for a given table.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data"
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Center Of Dataset
@@ -280,7 +294,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Find Within Distance
@@ -294,7 +311,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Point To Points Distance
@@ -308,7 +328,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Add Geometry Columns
@@ -322,7 +345,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Convex Hull
@@ -336,7 +362,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Aggregrate Points By Grid
@@ -350,7 +379,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Aggregrate Points By Polygons
@@ -364,7 +396,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Select Inside
@@ -378,7 +413,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Select Outside
@@ -392,7 +430,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Clip
@@ -406,7 +447,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Merge
@@ -420,7 +464,10 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Combine Datasets
@@ -434,5 +481,8 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
