@@ -96,3 +96,59 @@ async def dissolve_by_value(info: models.DissolveByValueModel, request: Request,
         "process_id": process_id,
         "url": process_url
     }
+
+@router.post("/square_grids/", tags=["analysis"], response_model=models.BaseResponseModel)
+async def square_grids(info: models.GridModel, request: Request, background_tasks: BackgroundTasks):
+    new_table_id = utilities.get_new_table_id()
+
+    process_id = utilities.get_new_process_id()
+
+    process_url = str(request.base_url)
+
+    process_url += f"api/v1/analysis/status/{process_id}"
+
+    analysis_processes[process_id] = {
+        "status": "PENDING"
+    }
+
+    background_tasks.add_task(
+        analysis_queries.square_grids,
+        table=info.table,
+        database=info.database,
+        new_table_id=new_table_id,
+        grid_size_in_kilometers=info.grid_size_in_kilometers,
+        process_id=process_id
+    )
+
+    return {
+        "process_id": process_id,
+        "url": process_url
+    }
+
+@router.post("/hexagon_grids/", tags=["analysis"], response_model=models.BaseResponseModel)
+async def hexagon_grids(info: models.GridModel, request: Request, background_tasks: BackgroundTasks):
+    new_table_id = utilities.get_new_table_id()
+
+    process_id = utilities.get_new_process_id()
+
+    process_url = str(request.base_url)
+
+    process_url += f"api/v1/analysis/status/{process_id}"
+
+    analysis_processes[process_id] = {
+        "status": "PENDING"
+    }
+
+    background_tasks.add_task(
+        analysis_queries.hexagon_grids,
+        table=info.table,
+        database=info.database,
+        new_table_id=new_table_id,
+        grid_size_in_kilometers=info.grid_size_in_kilometers,
+        process_id=process_id
+    )
+
+    return {
+        "process_id": process_id,
+        "url": process_url
+    }

@@ -38,7 +38,7 @@ Build Dockerfile into a docker image to deploy to the cloud.
 | `POST` | `/api/v1/analysis/buffer` | [Buffer](#Buffer)  |
 | `POST` | `/api/v1/analysis/dissolve` | [Dissolve](#Dissolve)  |
 | `POST` | `/api/v1/analysis/dissolve_by_value` | [Dissolve By Value](#Dissolve-By-Value)  |
-| `POST` | `/api/v1/analysis/rectangle_grids` | [Rectangle Grids](#Rectangle-Grids)  |
+| `POST` | `/api/v1/analysis/square_grids` | [Square Grids](#Square-Grids)  |
 | `POST` | `/api/v1/analysis/hexagon_grids` | [Hexagon Grids](#Hexagon-Grids)  |
 | `POST` | `/api/v1/analysis/bounding_box` | [Bounding Box](#Bounding-Box])  |
 | `POST` | `/api/v1/analysis/k_means_cluster` | [K Means Cluster](#K-Means-Cluster)  |
@@ -153,32 +153,50 @@ Dissolve any geometric table into geometries based off a column in the table.
 }
 ```
 
-## Rectangle Grids
+## Square Grids
+![Square Grids Image](/images/square_grids.png "Square Grids Image")
 
 ### Description
+Generate square grids of any size based off of a tables geometry.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data",
+    "grid_size_in_kilometers": "100"
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Hexagon Grids
+![Hexagon Grids Image](/images/hexagon_grids.png "Hexagon Grids Image")
 
 ### Description
+Generate hexagon grids of any size based off of a tables geometry.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data",
+    "grid_size_in_kilometers": "100"
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Bounding Box

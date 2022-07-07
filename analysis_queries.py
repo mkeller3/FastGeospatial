@@ -110,3 +110,63 @@ async def dissolve_by_value(table: str, database: str, new_table_id: str, column
         analysis.analysis_processes[process_id]['error'] = str(error)
         analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
         analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def square_grids(table: str, database: str, new_table_id: str, grid_size_in_kilometers: int, process_id: str):
+    """
+    Method to genreate square grids based off a given table.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql__query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT ST_Transform((ST_SquareGrid({grid_size_in_kilometers*1000}, ST_Transform(a.geom, 3857))).geom,4326) as geom
+            FROM {table} a;
+            """
+
+            await con.fetch(sql__query)
+
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def hexagon_grids(table: str, database: str, new_table_id: str, grid_size_in_kilometers: int, process_id: str):
+    """
+    Method to genreate hexagon grids based off a given table.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql__query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT ST_Transform((ST_HexagonGrid({grid_size_in_kilometers*1000}, ST_Transform(a.geom, 3857))).geom,4326) as geom
+            FROM {table} a;
+            """
+
+            await con.fetch(sql__query)
+
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
