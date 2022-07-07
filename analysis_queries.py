@@ -131,6 +131,14 @@ async def square_grids(table: str, database: str, new_table_id: str, grid_size_i
 
             await con.fetch(sql__query)
 
+            size_column_query = f"""
+            ALTER TABLE {new_table_id}
+            ADD COLUMN grid_size_in_kilometers float NOT NULL
+            DEFAULT {grid_size_in_kilometers};
+            """
+
+            await con.fetch(size_column_query)
+
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
             analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
@@ -160,6 +168,14 @@ async def hexagon_grids(table: str, database: str, new_table_id: str, grid_size_
             """
 
             await con.fetch(sql__query)
+
+            size_column_query = f"""
+            ALTER TABLE {new_table_id}
+            ADD COLUMN grid_size_in_kilometers float NOT NULL
+            DEFAULT {grid_size_in_kilometers};
+            """
+
+            await con.fetch(size_column_query)
 
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id

@@ -65,6 +65,111 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Dissolve",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"table\": \"states\",\n    \"database\": \"data\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/analysis/dissolve/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"analysis",
+						"dissolve",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dissolve By Value",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"table\": \"states\",\n    \"database\": \"data\",\n    \"column\": \"sub_region\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/analysis/dissolve_by_value/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"analysis",
+						"dissolve_by_value",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Square Grids",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"table\": \"states\",\n    \"database\": \"data\",\n    \"grid_size_in_kilometers\": \"100\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/analysis/square_grids/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"analysis",
+						"square_grids",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
