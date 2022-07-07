@@ -131,7 +131,7 @@ Dissolve any geometric table into one single geometry.
 ```
 
 ## Dissolve By Value
-![Dissolve By Value Image](/images/dissolve_by_value.png "Dissolve By Value Image)
+![Dissolve By Value Image](/images/dissolve_by_value.png "Dissolve By Value Image")
 
 ### Description
 Dissolve any geometric table into geometries based off a column in the table.
