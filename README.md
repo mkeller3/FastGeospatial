@@ -58,16 +58,26 @@ Build Dockerfile into a docker image to deploy to the cloud.
 
 ## Buffer
 
+[Buffer Image](/images/buffer.png)
+
 ### Description
+Buffer an geometric table with a buffer in kilometers.
 
 ### Example Input
 ```json
-
+{
+    "table": "zip_centroids",
+    "database": "data",
+    "distance_in_kilometers": 1
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Dissolve
