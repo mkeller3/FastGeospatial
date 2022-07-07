@@ -13,7 +13,8 @@ class StatusResponseModel(BaseModel):
         default="SUCCESS"
     )
     new_table_id: str = Field(
-        default="shnxppipxrppsdkozuroilkubktfodibtqorhucjvxlcdrqyhh", title="50 character new table_id in postgresql."
+        default="shnxppipxrppsdkozuroilkubktfodibtqorhucjvxlcdrqyhh",
+        title="50 character new table_id in postgresql."
     )
     completion_time: str = Field(
         default="2022-07-06T19:33:17.950059"

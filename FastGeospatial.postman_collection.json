@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "5e3a7e9e-0063-4657-97b1-be2f30133d8e",
+		"name": "FastGeospatial",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Buffer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"table\": \"zip_centroids\",\n    \"database\": \"data\",\n    \"distance_in_kilometers\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/analysis/buffer/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"analysis",
+						"buffer",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Analysis Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/analysis/status/472e29dc-91a8-41d3-b05f-cee34006e3f7",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"analysis",
+						"status",
+						"472e29dc-91a8-41d3-b05f-cee34006e3f7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

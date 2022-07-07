@@ -1,4 +1,4 @@
-from fastapi import APIRouter, BackgroundTasks, Path, Request
+from fastapi import APIRouter, BackgroundTasks, Request
 
 import utilities
 import analysis_queries
@@ -8,7 +8,7 @@ router = APIRouter()
 
 analysis_processes = {}
 
-@router.get("/status/{process_id}", tags=["analysis"], response_model=models.StatusResponseModel)
+@router.get("/status/{process_id}", tags=["analysis"])
 def status(process_id: str):
     if process_id not in analysis_processes:
         return {"status": "UNKNOWN", "error": "This process_id does not exist."}
@@ -42,3 +42,29 @@ async def buffer(info: models.BufferModel, request: Request, background_tasks: B
         "url": process_url
     }
 
+@router.post("/dissolve/", tags=["analysis"], response_model=models.BaseResponseModel)
+async def dissolve(info: models.BaseAnalysisModel, request: Request, background_tasks: BackgroundTasks):
+    new_table_id = utilities.get_new_table_id()
+
+    process_id = utilities.get_new_process_id()
+
+    process_url = str(request.base_url)
+
+    process_url += f"api/v1/analysis/status/{process_id}"
+
+    analysis_processes[process_id] = {
+        "status": "PENDING"
+    }
+
+    background_tasks.add_task(
+        analysis_queries.dissolve,
+        table=info.table,
+        database=info.database,
+        new_table_id=new_table_id,
+        process_id=process_id
+    )
+
+    return {
+        "process_id": process_id,
+        "url": process_url
+    }

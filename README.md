@@ -109,16 +109,25 @@ Buffer an geometric table with a buffer in kilometers.
 
 ## Dissolve
 
+![Dissolve Image](/images/dissolve.png "Dissolve Image")
+
 ### Description
+Dissolve any geometric table into one single geometry.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data"
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## Dissolve By Value
