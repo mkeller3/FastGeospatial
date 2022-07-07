@@ -187,7 +187,7 @@ Generate hexagon grids of any size based off of a tables geometry.
 {
     "table": "states",
     "database": "data",
-    "grid_size_in_kilometers": "100"
+    "grid_size_in_kilometers": 100
 }
 ```
 
@@ -200,17 +200,25 @@ Generate hexagon grids of any size based off of a tables geometry.
 ```
 
 ## Bounding Box
+![Bounding Box Image](/images/bounding_box.png "Bounding Box Image")
 
 ### Description
+Generate a bounding box of a table.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data",
+}
 ```
 
 ### Example Output
 ```json
-
+{
+  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
+  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
+}
 ```
 
 ## K Means Cluster
