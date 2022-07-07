@@ -12,33 +12,40 @@ async def buffer(table: str, database: str, distance_in_kilometers: float, new_t
 
     start = datetime.datetime.now()
 
-    pool = main.app.state.databases[f'{database}_pool']
+    try:
 
-    fields = await utilities.get_table_columns(
-        table=table,
-        database=database
-    )
-    
-    fields = ','.join(fields)
+        pool = main.app.state.databases[f'{database}_pool']
 
-    async with pool.acquire() as con:
-        sql__query = f"""
-        CREATE TABLE "{new_table_id}" AS
-        SELECT {fields}, ST_Transform(ST_Buffer(ST_Transform(geom,3857), {distance_in_kilometers*1000}),4326) as geom
-        FROM "{table}";
-        """
+        fields = await utilities.get_table_columns(
+            table=table,
+            database=database
+        )
+        
+        fields = ','.join(fields)
 
-        await con.fetch(sql__query)
+        async with pool.acquire() as con:
+            sql__query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT {fields}, ST_Transform(ST_Buffer(ST_Transform(geom,3857), {distance_in_kilometers*1000}),4326) as geom
+            FROM "{table}";
+            """
 
-        buffer_column_query = f"""
-        ALTER TABLE {new_table_id}
-        ADD COLUMN buffer_distance_in_kilometers float NOT NULL
-        DEFAULT {distance_in_kilometers};
-        """
+            await con.fetch(sql__query)
 
-        await con.fetch(buffer_column_query)
+            buffer_column_query = f"""
+            ALTER TABLE {new_table_id}
+            ADD COLUMN buffer_distance_in_kilometers float NOT NULL
+            DEFAULT {distance_in_kilometers};
+            """
 
-        analysis.analysis_processes[process_id]['status'] = "SUCCESS"
-        analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            await con.fetch(buffer_column_query)
+
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
         analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
         analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start

@@ -8,13 +8,13 @@ router = APIRouter()
 
 analysis_processes = {}
 
-@router.get("/status/{process_id}", tags=["analysis"])
+@router.get("/status/{process_id}", tags=["analysis"], response_model=models.StatusResponseModel)
 def status(process_id: str):
     if process_id not in analysis_processes:
-        return {"status": "unknown", "error": "This process_id does not exist."}
+        return {"status": "UNKNOWN", "error": "This process_id does not exist."}
     return analysis_processes[process_id]
 
-@router.post("/buffer/", tags=["analysis"])
+@router.post("/buffer/", tags=["analysis"], response_model=models.BaseResponseModel)
 async def buffer(info: models.BufferModel, request: Request, background_tasks: BackgroundTasks):
     new_table_id = utilities.get_new_table_id()
 

@@ -8,6 +8,39 @@ class BaseAnalysisModel(BaseModel):
         default=None, title="Name of the database the table belongs to."
     )
 
+class StatusResponseModel(BaseModel):
+    status: str = Field(
+        default="SUCCESS"
+    )
+    new_table_id: str = Field(
+        default="shnxppipxrppsdkozuroilkubktfodibtqorhucjvxlcdrqyhh", title="50 character new table_id in postgresql."
+    )
+    completion_time: str = Field(
+        default="2022-07-06T19:33:17.950059"
+    )
+    run_time_in_seconds: float = Field(
+        default=1.78599
+    )
+
+class BaseResponseModel(BaseModel):
+    process_id: str = Field(
+        default="472e29dc-91a8-41d3-b05f-cee34006e3f7"
+    )
+    url: str = Field(
+        default="http://127.0.0.1:8000/api/v1/analysis/status/472e29dc-91a8-41d3-b05f-cee34006e3f7"
+    )
+
+class BadResponseModel(BaseModel):
+    status: str = Field(
+        default="FAILURE"
+    )
+    completion_time: str = Field(
+        default="2022-07-06T19:33:17.950059"
+    )
+    run_time_in_seconds: float = Field(
+        default=1.78599
+    )
+
 class BufferModel(BaseModel):
     table: str = Field(
         default=None, title="Name of the table to perform analysis on."
