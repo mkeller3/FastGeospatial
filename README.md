@@ -58,7 +58,7 @@ Build Dockerfile into a docker image to deploy to the cloud.
 
 ## Buffer
 
-[Buffer Image](/images/buffer.png)
+![Buffer Image](/images/buffer.png "Buffer Image")
 
 ### Description
 Buffer an geometric table with a buffer in kilometers.
