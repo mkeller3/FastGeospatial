@@ -284,12 +284,17 @@ Find the center of each polygon for a given table.
 ```
 
 ## Center Of Dataset
+![Center of Dataset Image](/images/center_of_dataset.png "Center of Dataset Image")
 
 ### Description
+Find the center of all geometries based off a given table.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data"
+}
 ```
 
 ### Example Output
