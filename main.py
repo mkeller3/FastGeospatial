@@ -10,7 +10,7 @@ A lightweight python api to perform geospatial analysis from PostGIS.
 """
 
 app = FastAPI(
-    title="FastVector",
+    title="FastGeospatial",
     description=DESCRIPTION,
     version="0.0.1",
     contact={
