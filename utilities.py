@@ -19,7 +19,7 @@ def get_new_process_id() -> str:
 
     return str(uuid.uuid4())
 
-async def get_table_columns(table: str, database: str) -> list:
+async def get_table_columns(table: str, database: str, new_table_name: str=None) -> list:
     """
     Method to return a list of columns for a table.
     """
@@ -40,6 +40,10 @@ async def get_table_columns(table: str, database: str) -> list:
         fields = []
 
         for field in db_fields:
-            fields.append(field['column_name'])
+            if new_table_name:
+                column_name = field['column_name']
+                fields.append(f"{new_table_name}.{column_name}")
+            else:
+                fields.append(field['column_name'])
 
         return fields

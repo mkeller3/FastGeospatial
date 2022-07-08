@@ -480,3 +480,42 @@ async def select_outside(table: str, database: str, new_table_id: str, polygons:
         analysis.analysis_processes[process_id]['error'] = str(error)
         analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
         analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def clip(table: str, database: str, new_table_id: str, polygons: str, process_id: str):
+    """
+    Method to clip geometries given polygon table.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        fields = await utilities.get_table_columns(
+            table=table,
+            database=database,
+            new_table_name="a"
+        )
+
+        fields = ','.join(fields)
+
+        async with pool.acquire() as con:
+            sql_query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT {fields}, ST_Intersection(polygons.geom, a.geom) as geom
+            FROM "{table}" as a, "{polygons}" as polygons
+            WHERE ST_Intersects(a.geom, polygons.geom);
+            """
+
+            await con.fetch(sql_query)
+            
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start

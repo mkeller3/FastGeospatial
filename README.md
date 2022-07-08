@@ -473,12 +473,18 @@ Find all geomtries outside a given polygon table.
 ```
 
 ## Clip
+![Clip Image](/images/clip.png "Clip Image")
 
 ### Description
+Clip any geometric table based of a polygon table.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data",
+    "polygons": "big_polygon"
+}
 ```
 
 ### Example Output
