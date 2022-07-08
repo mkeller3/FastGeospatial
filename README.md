@@ -55,8 +55,10 @@ Build Dockerfile into a docker image to deploy to the cloud.
 | `POST` | `/api/v1/analysis/clip` | [Clip](#Clip)  |
 | `POST` | `/api/v1/analysis/merge` | [Merge](#Merge)  |
 
+## Endpoint Description's
+
 ## Analysis Status
-Any time an analysis is submitted it given a process_id to have the analysis run in the background. To check the
+Any time an analysis is submitted it given a process_id to have the analysis run in the background using [FastAPI's Background Tasks](https://fastapi.tiangolo.com/tutorial/background-tasks/). To check the
 status of an analysis, you can call this endpoint with the process_id.
 
 ## Example Call
