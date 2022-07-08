@@ -365,12 +365,17 @@ Find all geometric within a given distance from a given point.
 ```
 
 ## Convex Hull
+![Convex Hull Image](/images/convex_hull.png "Convex HullImage")
 
 ### Description
+Find the smallest convex hull around a given table.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data"
+}
 ```
 
 ### Example Output

@@ -126,7 +126,7 @@ async def square_grids(table: str, database: str, new_table_id: str, grid_size_i
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Transform((ST_SquareGrid({grid_size_in_kilometers*1000}, ST_Transform(a.geom, 3857))).geom,4326) as geom
-            FROM {table} a;
+            FROM "{table}" a;
             """
 
             await con.fetch(sql_query)
@@ -164,7 +164,7 @@ async def hexagon_grids(table: str, database: str, new_table_id: str, grid_size_
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Transform((ST_HexagonGrid({grid_size_in_kilometers*1000}, ST_Transform(a.geom, 3857))).geom,4326) as geom
-            FROM {table} a;
+            FROM "{table}" a;
             """
 
             await con.fetch(sql_query)
@@ -202,7 +202,7 @@ async def bounding_box(table: str, database: str, new_table_id: str, process_id:
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Envelope(ST_Union(geom)) as geom
-            FROM {table};
+            FROM "{table}";
             """
 
             await con.fetch(sql_query)
@@ -239,7 +239,7 @@ async def k_means_cluster(table: str, database: str, new_table_id: str, number_o
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_ClusterKMeans(geom, {number_of_clusters}) over () as cluster_id, {fields}, geom
-            FROM {table};
+            FROM "{table}";
             """
 
             await con.fetch(sql_query)
@@ -276,7 +276,7 @@ async def center_of_each_polygon(table: str, database: str, new_table_id: str, p
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT {fields}, ST_Centroid(geom) geom
-            FROM {table};
+            FROM "{table}";
             """
 
             await con.fetch(sql_query)
@@ -306,7 +306,7 @@ async def center_of_dataset(table: str, database: str, new_table_id: str, proces
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Centroid(ST_Union(geom)) geom
-            FROM {table};
+            FROM "{table}";
             """
 
             await con.fetch(sql_query)
@@ -337,8 +337,38 @@ async def find_within_distance(table: str, database: str, new_table_id: str,
             sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT *
-            FROM {table}
+            FROM "{table}"
             WHERE ST_Intersects(geom, ST_Transform(ST_Buffer(ST_Transform(ST_SetSRID(ST_Point({longitude}, {latitude}),4326),3857), {distance_in_kilometers*1000}),4326));
+            """
+
+            await con.fetch(sql_query)
+            
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def convex_hull(table: str, database: str, new_table_id: str, process_id: str):
+    """
+    Method to find the convex hull of all geometries based off a given table.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql_query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT ST_ConvexHull(ST_Union(geom)) geom
+            FROM "{table}";
             """
 
             await con.fetch(sql_query)
