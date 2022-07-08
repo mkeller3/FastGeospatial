@@ -6,7 +6,7 @@ from routers import analysis
 import db
 
 DESCRIPTION = """
-A lightweight python api to serve vector tiles from PostGIS.
+A lightweight python api to perform geospatial analysis from PostGIS.
 """
 
 app = FastAPI(
