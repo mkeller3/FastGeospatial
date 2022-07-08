@@ -81,12 +81,24 @@ status of an analysis, you can call this endpoint with the process_id.
 }
 ```
 
+## Example Output - Error
+```json
+{
+    "status": "FAILURE",
+    "error": "ERROR HERE",
+    "completion_time": "2022-07-08T13:39:47.961389",
+    "run_time_in_seconds": 0.040892
+}
+```
+
 ## Buffer
 
 ![Buffer Image](/images/buffer.png "Buffer Image")
 
 ### Description
 Buffer an geometric table with a buffer in kilometers.
+
+Example: Buffer zip centroids by one kilometer.
 
 ### Example Input
 ```json
@@ -112,6 +124,8 @@ Buffer an geometric table with a buffer in kilometers.
 ### Description
 Dissolve any geometric table into one single geometry.
 
+Example: Dissolve all the US States into one single geometry.
+
 ### Example Input
 ```json
 {
@@ -133,6 +147,8 @@ Dissolve any geometric table into one single geometry.
 
 ### Description
 Dissolve any geometric table into geometries based off a column in the table.
+
+Example: Dissolve US States based off a column in the table called `sub_region`.
 
 ### Example Input
 ```json
@@ -157,6 +173,8 @@ Dissolve any geometric table into geometries based off a column in the table.
 ### Description
 Generate square grids of any size based off of a tables geometry.
 
+Example: Generate 100 kilometers square grids based off of a table containing US States.
+
 ### Example Input
 ```json
 {
@@ -179,6 +197,8 @@ Generate square grids of any size based off of a tables geometry.
 
 ### Description
 Generate hexagon grids of any size based off of a tables geometry.
+
+Example: Generate 100 kilometers hexagon grids based off of a table containing US States.
 
 ### Example Input
 ```json
@@ -203,6 +223,8 @@ Generate hexagon grids of any size based off of a tables geometry.
 ### Description
 Generate a bounding box of a table.
 
+Example: Find the bounding box of a table that contains all of the US States.
+
 ### Example Input
 ```json
 {
@@ -221,6 +243,8 @@ Generate a bounding box of a table.
 
 ## K Means Cluster
 ![K Means Cluster Image](/images/k_means_cluster.png "K Means Cluster Image")
+
+Example: Group all US zip centroids into  5 groups based off of k means clusters.
 
 ### Description
 Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to group points based on their location.
@@ -265,6 +289,8 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 ### Description
 Find the center of each polygon for a given table.
 
+Example: Find the center of each US State.
+
 ### Example Input
 ```json
 {
@@ -287,6 +313,8 @@ Find the center of each polygon for a given table.
 ### Description
 Find the center of all geometries based off a given table.
 
+Example: Find the geomeric center of a table that contains all of the US States.
+
 ### Example Input
 ```json
 {
@@ -308,6 +336,8 @@ Find the center of all geometries based off a given table.
 
 ### Description
 Find all geometries within a given distance from a given point.
+
+Example: Find all states within `500` kilometers of latitude `40.45` and latitude `-88.95`.
 
 ### Example Input
 ```json
@@ -351,6 +381,8 @@ Find all geometries within a given distance from a given point.
 ### Description
 Find the smallest convex hull around a given table.
 
+Example: Find the smallest convex hull around all the US States.
+
 ### Example Input
 ```json
 {
@@ -390,6 +422,8 @@ Find the smallest convex hull around a given table.
 ### Description
 Aggregate a table of points into a table of polygons to determine how points are in each polygon.
 
+Example: Determine how many zip centroids are within each US State.
+
 ### Example Input
 ```json
 {
@@ -412,6 +446,8 @@ Aggregate a table of points into a table of polygons to determine how points are
 
 ### Description
 Find all geometries within a given polygon table.
+
+Example: Find all zip centroids within the US States table.
 
 ### Example Input
 ```json
@@ -436,6 +472,8 @@ Find all geometries within a given polygon table.
 ### Description
 Find all geomtries outside a given polygon table.
 
+Example: Find all the zip centroids outside of the table with US States.
+
 ### Example Input
 ```json
 {
@@ -458,6 +496,8 @@ Find all geomtries outside a given polygon table.
 
 ### Description
 Clip any geometric table based of a polygon table.
+
+Example: Clip the US States table to a large polygon.
 
 ### Example Input
 ```json

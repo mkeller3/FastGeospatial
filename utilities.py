@@ -40,10 +40,10 @@ async def get_table_columns(table: str, database: str, new_table_name: str=None)
         fields = []
 
         for field in db_fields:
-            if new_table_name:
-                column_name = field['column_name']
-                fields.append(f"{new_table_name}.{column_name}")
-            else:
-                fields.append(field['column_name'])
+            # if new_table_name:
+            #     column_name = field['column_name']
+            #     fields.append(f"{new_table_name}.{column_name}")
+            # else:
+            fields.append(field['column_name'])
 
         return fields
