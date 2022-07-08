@@ -24,13 +24,13 @@ async def buffer(table: str, database: str, distance_in_kilometers: float, new_t
         fields = ','.join(fields)
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT {fields}, ST_Transform(ST_Buffer(ST_Transform(geom,3857), {distance_in_kilometers*1000}),4326) as geom
             FROM "{table}";
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
 
             buffer_column_query = f"""
             ALTER TABLE {new_table_id}
@@ -62,13 +62,13 @@ async def dissolve(table: str, database: str, new_table_id: str, process_id: str
         pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Union(geom) as geom
             FROM "{table}";
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
 
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
@@ -92,14 +92,14 @@ async def dissolve_by_value(table: str, database: str, new_table_id: str, column
         pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT DISTINCT("{column}"), ST_Union(geom) as geom
             FROM "{table}"
             GROUP BY "{column}";
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
 
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
@@ -123,13 +123,13 @@ async def square_grids(table: str, database: str, new_table_id: str, grid_size_i
         pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Transform((ST_SquareGrid({grid_size_in_kilometers*1000}, ST_Transform(a.geom, 3857))).geom,4326) as geom
             FROM {table} a;
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
 
             size_column_query = f"""
             ALTER TABLE {new_table_id}
@@ -161,13 +161,13 @@ async def hexagon_grids(table: str, database: str, new_table_id: str, grid_size_
         pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Transform((ST_HexagonGrid({grid_size_in_kilometers*1000}, ST_Transform(a.geom, 3857))).geom,4326) as geom
             FROM {table} a;
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
 
             size_column_query = f"""
             ALTER TABLE {new_table_id}
@@ -199,13 +199,13 @@ async def bounding_box(table: str, database: str, new_table_id: str, process_id:
         pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Envelope(ST_Union(geom)) as geom
             FROM {table};
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
             
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
@@ -236,13 +236,13 @@ async def k_means_cluster(table: str, database: str, new_table_id: str, number_o
         fields = ','.join(fields)
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_ClusterKMeans(geom, {number_of_clusters}) over () as cluster_id, {fields}, geom
             FROM {table};
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
             
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
@@ -273,13 +273,13 @@ async def center_of_each_polygon(table: str, database: str, new_table_id: str, p
         fields = ','.join(fields)
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT {fields}, ST_Centroid(geom) geom
             FROM {table};
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
             
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
@@ -303,13 +303,45 @@ async def center_of_dataset(table: str, database: str, new_table_id: str, proces
         pool = main.app.state.databases[f'{database}_pool']
 
         async with pool.acquire() as con:
-            sql__query = f"""
+            sql_query = f"""
             CREATE TABLE "{new_table_id}" AS
             SELECT ST_Centroid(ST_Union(geom)) geom
             FROM {table};
             """
 
-            await con.fetch(sql__query)
+            await con.fetch(sql_query)
+            
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def find_within_distance(table: str, database: str, new_table_id: str,
+    latitude: float, longitude: float, distance_in_kilometers: float, process_id: str):
+    """
+    Method to find all geometries within set distance of latitude and longitude.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql_query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT *
+            FROM {table}
+            WHERE ST_Intersects(geom, ST_Transform(ST_Buffer(ST_Transform(ST_SetSRID(ST_Point({longitude}, {latitude}),4326),3857), {distance_in_kilometers*1000}),4326));
+            """
+
+            await con.fetch(sql_query)
             
             analysis.analysis_processes[process_id]['status'] = "SUCCESS"
             analysis.analysis_processes[process_id]['new_table_id'] = new_table_id

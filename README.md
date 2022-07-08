@@ -306,12 +306,20 @@ Find the center of all geometries based off a given table.
 ```
 
 ## Find Within Distance
+![Find Within Distance Image](/images/find_within_distance.png "Find Within Distance Image")
 
 ### Description
+Find all geometric within a given distance from a given point.
 
 ### Example Input
 ```json
-
+{
+    "table": "states",
+    "database": "data",
+    "latitude": 40.45,
+    "longitude": -88.95,
+    "distance_in_kilometers": 500
+}
 ```
 
 ### Example Output

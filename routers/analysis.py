@@ -261,3 +261,33 @@ async def center_of_dataset(info: models.BaseAnalysisModel, request: Request, ba
         "process_id": process_id,
         "url": process_url
     }
+
+@router.post("/find_within_distance/", tags=["analysis"], response_model=models.BaseResponseModel)
+async def find_within_distance(info: models.FindWithinDistanceModel, request: Request, background_tasks: BackgroundTasks):
+    new_table_id = utilities.get_new_table_id()
+
+    process_id = utilities.get_new_process_id()
+
+    process_url = str(request.base_url)
+
+    process_url += f"api/v1/analysis/status/{process_id}"
+
+    analysis_processes[process_id] = {
+        "status": "PENDING"
+    }
+
+    background_tasks.add_task(
+        analysis_queries.find_within_distance,
+        table=info.table,
+        database=info.database,
+        new_table_id=new_table_id,
+        latitude=info.latitude,
+        longitude=info.longitude,
+        distance_in_kilometers=info.distance_in_kilometers,
+        process_id=process_id
+    )
+
+    return {
+        "process_id": process_id,
+        "url": process_url
+    }

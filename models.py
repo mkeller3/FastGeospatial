@@ -85,3 +85,20 @@ class KMeansModel(BaseModel):
     number_of_clusters: int = Field(
         default=None, title="Number of clusters to group points together."
     )
+
+class FindWithinDistanceModel(BaseModel):
+    table: str = Field(
+        default=None, title="Name of the table to perform analysis on."
+    )
+    database: str = Field(
+        default=None, title="Name of the database the table belongs to."
+    )
+    latitude: float = Field(
+        default=None, title="Starting Latitude."
+    )
+    longitude: float = Field(
+        default=None, title="Starting Latitude."
+    )
+    distance_in_kilometers: float = Field(
+        default=None, title="Size to search in kilometers."
+    )
