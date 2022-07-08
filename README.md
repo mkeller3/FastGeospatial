@@ -49,8 +49,8 @@ Build Dockerfile into a docker image to deploy to the cloud.
 | `POST` | `/api/v1/analysis/point_to_points_distance` | [Point To Points Distance](#Point-To-Points-Distance)  |
 | `POST` | `/api/v1/analysis/add_geomtry_columns` | [Add Geometry Columns](#Add-Geometry-Columns)  |
 | `POST` | `/api/v1/analysis/convex_hull` | [Convex Hull](#Convex-Hull)  |
-| `POST` | `/api/v1/analysis/aggregrate_points_by_grids` | [Aggregrate Points By Grid](#Aggregrate-Points-By-Grid)  |
-| `POST` | `/api/v1/analysis/aggregrate_points_by_polygons` | [Aggregrate Points By Polygons](#Aggregrate-Points-By-Polygons)  |
+| `POST` | `/api/v1/analysis/aggregate_points_by_grids` | [Aggregate Points By Grid](#Aggregate-Points-By-Grid)  |
+| `POST` | `/api/v1/analysis/aggregate_points_by_polygons` | [Aggregate Points By Polygons](#Aggregate-Points-By-Polygons)  |
 | `POST` | `/api/v1/analysis/select_inside` | [Select Inside](#Select-Inside)  |
 | `POST` | `/api/v1/analysis/select_outside` | [Select Outside](#Select-Outside)  |
 | `POST` | `/api/v1/analysis/clip` | [Clip](#Clip)  |
@@ -365,7 +365,7 @@ Find all geometric within a given distance from a given point.
 ```
 
 ## Convex Hull
-![Convex Hull Image](/images/convex_hull.png "Convex HullImage")
+![Convex Hull Image](/images/convex_hull.png "Convex Hull Image")
 
 ### Description
 Find the smallest convex hull around a given table.
@@ -386,7 +386,7 @@ Find the smallest convex hull around a given table.
 }
 ```
 
-## Aggregrate Points By Grid
+## Aggregate Points By Grid
 
 ### Description
 
@@ -403,13 +403,19 @@ Find the smallest convex hull around a given table.
 }
 ```
 
-## Aggregrate Points By Polygons
+## Aggregate Points By Polygons
+![Aggregate Points By Polygons Image](/images/aggregrate_points_by_polygons.png "Aggregate Points By Polygons Image")
 
 ### Description
+Aggregate a table of points into a table of polygons to determine how points are in each polygon.
 
 ### Example Input
 ```json
-
+{
+    "table": "zip_centroids",
+    "database": "data",
+    "polygons": "states"
+}
 ```
 
 ### Example Output

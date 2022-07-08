@@ -102,3 +102,14 @@ class FindWithinDistanceModel(BaseModel):
     distance_in_kilometers: float = Field(
         default=None, title="Size to search in kilometers."
     )
+
+class AggregatePointsByPolygonsModel(BaseModel):
+    table: str = Field(
+        default=None, title="Name of the table to perform analysis on."
+    )
+    database: str = Field(
+        default=None, title="Name of the database the table belongs to."
+    )
+    polygons: str = Field(
+        default=None, title="Name of the table of polygons."
+    )

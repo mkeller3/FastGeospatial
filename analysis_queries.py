@@ -382,3 +382,36 @@ async def convex_hull(table: str, database: str, new_table_id: str, process_id: 
         analysis.analysis_processes[process_id]['error'] = str(error)
         analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
         analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def aggregate_points_by_polygons(table: str, database: str, new_table_id: str, polygons: str, process_id: str):
+    """
+    Method to aggegate points into polygons.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql_query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT polygons.gid, COUNT(points.geom) AS number_of_points, polygons.geom
+            FROM "{table}" AS points
+            LEFT JOIN "{polygons}" AS polygons
+            ON ST_Contains(polygons.geom,points.geom)
+            GROUP BY polygons.gid;
+            """
+
+            await con.fetch(sql_query)
+            
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
