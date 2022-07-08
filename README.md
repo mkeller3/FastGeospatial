@@ -18,7 +18,15 @@ In order for the api to work you will need to edit the `config.py` file with you
 
 Example
 ```python
-
+DATABASES = {
+    "data": {
+        "host": "localhost",
+        "database": "data",
+        "username": "postgres",
+        "password": "postgres",
+        "port": 5432,
+    }
+}
 ```
 
 ## Usage
@@ -42,18 +50,15 @@ Build Dockerfile into a docker image to deploy to the cloud.
 | `POST` | `/api/v1/analysis/hexagon_grids` | [Hexagon Grids](#Hexagon-Grids)  |
 | `POST` | `/api/v1/analysis/bounding_box` | [Bounding Box](#Bounding-Box])  |
 | `POST` | `/api/v1/analysis/k_means_cluster` | [K Means Cluster](#K-Means-Cluster)  |
-| `POST` | `/api/v1/analysis/voronoi` | [Voronoi](#Voronoi)  |
 | `POST` | `/api/v1/analysis/center_of_each_polygon` | [Center Of Each Polygon](#Center-Of-Each-Polygon)  |
 | `POST` | `/api/v1/analysis/center_of_dataset` | [Center Of Dataset](#Center-Of-Dataset)  |
 | `POST` | `/api/v1/analysis/find_within_distance` | [Find Within Distance](#Find-Within-Distance)  |
-| `POST` | `/api/v1/analysis/point_to_points_distance` | [Point To Points Distance](#Point-To-Points-Distance)  |
 | `POST` | `/api/v1/analysis/convex_hull` | [Convex Hull](#Convex-Hull)  |
 | `POST` | `/api/v1/analysis/aggregate_points_by_grids` | [Aggregate Points By Grid](#Aggregate-Points-By-Grid)  |
 | `POST` | `/api/v1/analysis/aggregate_points_by_polygons` | [Aggregate Points By Polygons](#Aggregate-Points-By-Polygons)  |
 | `POST` | `/api/v1/analysis/select_inside` | [Select Inside](#Select-Inside)  |
 | `POST` | `/api/v1/analysis/select_outside` | [Select Outside](#Select-Outside)  |
 | `POST` | `/api/v1/analysis/clip` | [Clip](#Clip)  |
-| `POST` | `/api/v1/analysis/merge` | [Merge](#Merge)  |
 
 ## Endpoint Description's
 
@@ -268,23 +273,6 @@ Use [K Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering) to gr
 }
 ```
 
-## Voronoi
-
-### Description
-
-### Example Input
-```json
-
-```
-
-### Example Output
-```json
-{
-  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
-  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
-}
-```
-
 ## Center Of Each Polygon
 ![Center of Each Polygon Image](/images/center_of_each_polygon.png "Center of Each Polygon Image")
 
@@ -350,23 +338,6 @@ Example: Find all states within `500` kilometers of latitude `40.45` and latitud
     "longitude": -88.95,
     "distance_in_kilometers": 500
 }
-```
-
-### Example Output
-```json
-{
-  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
-  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
-}
-```
-
-## Point To Points Distance
-
-### Description
-
-### Example Input
-```json
-
 ```
 
 ### Example Output
@@ -517,23 +488,6 @@ Example: Clip the US States table to a large polygon.
     "database": "data",
     "polygons": "big_polygon"
 }
-```
-
-### Example Output
-```json
-{
-  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
-  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
-}
-```
-
-## Merge
-
-### Description
-
-### Example Input
-```json
-
 ```
 
 ### Example Output
