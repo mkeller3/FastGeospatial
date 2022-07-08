@@ -113,3 +113,17 @@ class PolygonsModel(BaseModel):
     polygons: str = Field(
         default=None, title="Name of the table of polygons."
     )
+
+class AggregatePointsByGridsModel(BaseModel):
+    table: str = Field(
+        default=None, title="Name of the table to perform analysis on."
+    )
+    database: str = Field(
+        default=None, title="Name of the database the table belongs to."
+    )
+    distance_in_kilometers: float = Field(
+        default=None, title="Size to search in kilometers."
+    )
+    grid_type: str = Field(
+        default=None, title="Type of grid to use."
+    )

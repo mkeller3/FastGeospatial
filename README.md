@@ -400,12 +400,21 @@ Example: Find the smallest convex hull around all the US States.
 ```
 
 ## Aggregate Points By Grid
+![Aggregate Points By Grid Image](/images/aggregate_points_by_grids.png "Aggregate Points By Grid Image")
 
 ### Description
+Aggregate a table of points into grids and determine how points are in each grid.
+
+Example: Determine how many zip centroids are each 1000 kilometer hexagon grid.
 
 ### Example Input
 ```json
-
+{
+    "table": "zip_centroids",
+    "database": "data",
+    "distance_in_kilometers": 1000,
+    "grid_type": "hexagon"
+}
 ```
 
 ### Example Output
@@ -420,7 +429,7 @@ Example: Find the smallest convex hull around all the US States.
 ![Aggregate Points By Polygons Image](/images/aggregate_points_by_polygons.png "Aggregate Points By Polygons Image")
 
 ### Description
-Aggregate a table of points into a table of polygons to determine how points are in each polygon.
+Aggregate a table of points into a table of polygons and determine how points are in each polygon.
 
 Example: Determine how many zip centroids are within each US State.
 
