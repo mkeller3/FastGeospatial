@@ -404,7 +404,7 @@ Find the smallest convex hull around a given table.
 ```
 
 ## Aggregate Points By Polygons
-![Aggregate Points By Polygons Image](/images/aggregrate_points_by_polygons.png "Aggregate Points By Polygons Image")
+![Aggregate Points By Polygons Image](/images/aggregate_points_by_polygons.png "Aggregate Points By Polygons Image")
 
 ### Description
 Aggregate a table of points into a table of polygons to determine how points are in each polygon.
