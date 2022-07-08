@@ -415,3 +415,68 @@ async def aggregate_points_by_polygons(table: str, database: str, new_table_id: 
         analysis.analysis_processes[process_id]['error'] = str(error)
         analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
         analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def select_inside(table: str, database: str, new_table_id: str, polygons: str, process_id: str):
+    """
+    Method to find geometries within a given polygon table.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql_query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT points.*
+            FROM "{table}" AS points
+            JOIN "{polygons}" AS polygons
+            ON ST_Intersects(points.geom, polygons.geom);
+            """
+
+            await con.fetch(sql_query)
+            
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+
+async def select_outside(table: str, database: str, new_table_id: str, polygons: str, process_id: str):
+    """
+    Method to find geometries outside a given polygon table.
+    """
+
+    start = datetime.datetime.now()
+
+    try:
+
+        pool = main.app.state.databases[f'{database}_pool']
+
+        async with pool.acquire() as con:
+            sql_query = f"""
+            CREATE TABLE "{new_table_id}" AS
+            SELECT *
+            FROM "{table}" AS points
+            JOIN "{polygons}" AS polygons
+            ON ST_Intersects(points.geom, polygons.geom)
+            WHERE polygons.gid IS NULL;
+            """
+
+            await con.fetch(sql_query)
+            
+            analysis.analysis_processes[process_id]['status'] = "SUCCESS"
+            analysis.analysis_processes[process_id]['new_table_id'] = new_table_id
+            analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+            analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start
+    except Exception as error:
+        analysis.analysis_processes[process_id]['status'] = "FAILURE"
+        analysis.analysis_processes[process_id]['error'] = str(error)
+        analysis.analysis_processes[process_id]['completion_time'] = datetime.datetime.now()
+        analysis.analysis_processes[process_id]['run_time_in_seconds'] = datetime.datetime.now()-start

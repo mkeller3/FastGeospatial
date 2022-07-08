@@ -320,7 +320,7 @@ async def convex_hull(info: models.BaseAnalysisModel, request: Request, backgrou
     }
 
 @router.post("/aggregate_points_by_polygons/", tags=["analysis"], response_model=models.BaseResponseModel)
-async def aggregate_points_by_polygons(info: models.AggregatePointsByPolygonsModel, request: Request, background_tasks: BackgroundTasks):
+async def aggregate_points_by_polygons(info: models.PolygonsModel, request: Request, background_tasks: BackgroundTasks):
     new_table_id = utilities.get_new_table_id()
 
     process_id = utilities.get_new_process_id()
@@ -335,6 +335,62 @@ async def aggregate_points_by_polygons(info: models.AggregatePointsByPolygonsMod
 
     background_tasks.add_task(
         analysis_queries.aggregrate_points_by_polygons,
+        table=info.table,
+        database=info.database,
+        new_table_id=new_table_id,
+        polygons=info.polygons,
+        process_id=process_id
+    )
+
+    return {
+        "process_id": process_id,
+        "url": process_url
+    }
+
+@router.post("/select_inside/", tags=["analysis"], response_model=models.BaseResponseModel)
+async def select_inside(info: models.PolygonsModel, request: Request, background_tasks: BackgroundTasks):
+    new_table_id = utilities.get_new_table_id()
+
+    process_id = utilities.get_new_process_id()
+
+    process_url = str(request.base_url)
+
+    process_url += f"api/v1/analysis/status/{process_id}"
+
+    analysis_processes[process_id] = {
+        "status": "PENDING"
+    }
+
+    background_tasks.add_task(
+        analysis_queries.select_inside,
+        table=info.table,
+        database=info.database,
+        new_table_id=new_table_id,
+        polygons=info.polygons,
+        process_id=process_id
+    )
+
+    return {
+        "process_id": process_id,
+        "url": process_url
+    }
+
+@router.post("/select_outside/", tags=["analysis"], response_model=models.BaseResponseModel)
+async def select_outside(info: models.PolygonsModel, request: Request, background_tasks: BackgroundTasks):
+    new_table_id = utilities.get_new_table_id()
+
+    process_id = utilities.get_new_process_id()
+
+    process_url = str(request.base_url)
+
+    process_url += f"api/v1/analysis/status/{process_id}"
+
+    analysis_processes[process_id] = {
+        "status": "PENDING"
+    }
+
+    background_tasks.add_task(
+        analysis_queries.select_outside,
         table=info.table,
         database=info.database,
         new_table_id=new_table_id,

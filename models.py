@@ -103,7 +103,7 @@ class FindWithinDistanceModel(BaseModel):
         default=None, title="Size to search in kilometers."
     )
 
-class AggregatePointsByPolygonsModel(BaseModel):
+class PolygonsModel(BaseModel):
     table: str = Field(
         default=None, title="Name of the table to perform analysis on."
     )

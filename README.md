@@ -309,7 +309,7 @@ Find the center of all geometries based off a given table.
 ![Find Within Distance Image](/images/find_within_distance.png "Find Within Distance Image")
 
 ### Description
-Find all geometric within a given distance from a given point.
+Find all geometries within a given distance from a given point.
 
 ### Example Input
 ```json
@@ -427,12 +427,18 @@ Aggregate a table of points into a table of polygons to determine how points are
 ```
 
 ## Select Inside
+![Select Inside Image](/images/select_inside.png "Select Inside Image")
 
 ### Description
+Find all geometries within a given polygon table.
 
 ### Example Input
 ```json
-
+{
+    "table": "zip_centroids",
+    "database": "data",
+    "polygons": "states"
+}
 ```
 
 ### Example Output
@@ -444,12 +450,18 @@ Aggregate a table of points into a table of polygons to determine how points are
 ```
 
 ## Select Outside
+![Select Outside Image](/images/select_outside.png "Select Outside Image")
 
 ### Description
+Find all geomtries outside a given polygon table.
 
 ### Example Input
 ```json
-
+{
+    "table": "zip_centroids",
+    "database": "data",
+    "polygons": "states"
+}
 ```
 
 ### Example Output
