@@ -47,7 +47,6 @@ Build Dockerfile into a docker image to deploy to the cloud.
 | `POST` | `/api/v1/analysis/center_of_dataset` | [Center Of Dataset](#Center-Of-Dataset)  |
 | `POST` | `/api/v1/analysis/find_within_distance` | [Find Within Distance](#Find-Within-Distance)  |
 | `POST` | `/api/v1/analysis/point_to_points_distance` | [Point To Points Distance](#Point-To-Points-Distance)  |
-| `POST` | `/api/v1/analysis/add_geomtry_columns` | [Add Geometry Columns](#Add-Geometry-Columns)  |
 | `POST` | `/api/v1/analysis/convex_hull` | [Convex Hull](#Convex-Hull)  |
 | `POST` | `/api/v1/analysis/aggregate_points_by_grids` | [Aggregate Points By Grid](#Aggregate-Points-By-Grid)  |
 | `POST` | `/api/v1/analysis/aggregate_points_by_polygons` | [Aggregate Points By Polygons](#Aggregate-Points-By-Polygons)  |
@@ -55,7 +54,6 @@ Build Dockerfile into a docker image to deploy to the cloud.
 | `POST` | `/api/v1/analysis/select_outside` | [Select Outside](#Select-Outside)  |
 | `POST` | `/api/v1/analysis/clip` | [Clip](#Clip)  |
 | `POST` | `/api/v1/analysis/merge` | [Merge](#Merge)  |
-| `POST` | `/api/v1/analysis/combine_datasets` | [Combine Datasets](#Combine-Datasets)  |
 
 ## Analysis Status
 Any time an analysis is submitted it given a process_id to have the analysis run in the background. To check the
@@ -347,23 +345,6 @@ Find all geometries within a given distance from a given point.
 }
 ```
 
-## Add Geometry Columns
-
-### Description
-
-### Example Input
-```json
-
-```
-
-### Example Output
-```json
-{
-  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
-  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
-}
-```
-
 ## Convex Hull
 ![Convex Hull Image](/images/convex_hull.png "Convex Hull Image")
 
@@ -496,23 +477,6 @@ Clip any geometric table based of a polygon table.
 ```
 
 ## Merge
-
-### Description
-
-### Example Input
-```json
-
-```
-
-### Example Output
-```json
-{
-  "process_id": "c8d7b8d8-3e82-4f93-b441-55a5f51c4171",
-  "url": "http://127.0.0.1:8000/api/v1/analysis/status/c8d7b8d8-3e82-4f93-b441-55a5f51c4171"
-}
-```
-
-## Combine Datasets
 
 ### Description
 
