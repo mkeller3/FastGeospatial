@@ -1,6 +1,6 @@
 # FastGeospatial
 
-FastGeospatial is a [PostGIS](https://github.com/postgis/postgis) geospatial api to enable geospatial queries on geographical data within a spatial database. FastGeospatial is written in [Python](https://www.python.org/) using the [FastAPI](https://fastapi.tiangolo.com/) web framework. 
+FastGeospatial is a [PostGIS](https://github.com/postgis/postgis) geospatial api to enable geospatial analyses on geographical data within a spatial database. FastGeospatial is written in [Python](https://www.python.org/) using the [FastAPI](https://fastapi.tiangolo.com/) web framework. 
 
 ---
 
